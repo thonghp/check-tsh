@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giao diện Chuyển Đổi Thông Tin</title>
+    <style>
+        /* Định dạng chung cho toàn bộ trang */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Khung chứa giao diện giống như một hộp thoại ứng dụng */
+        .app-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 380px;
+            box-sizing: border-box;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #333333;
+            text-align: center;
+            font-size: 22px;
+        }
+
+        /* Định dạng các nhóm ô nhập liệu */
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #555555;
+            font-size: 14px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .input-group input:focus {
+            border-color: #007bff;
+        }
+
+        /* Định dạng nút bấm */
+        .btn-submit {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-submit:hover {
+            background-color: #0056b3;
+        }
+
+        /* Nội dung hiển thị ở màn hình 2 */
+        .content-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+        }
+
+        .user-info {
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        /* Class dùng để ẩn thành phần giao diện */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="screen-input" class="app-container">
+        <h2>Nhập Thông Tin</h2>
+
+        <div class="input-group">
+            <label for="firstName">Tên thường gọi</label>
+            <input type="text" id="name" placeholder="Vd: thong, ngoc anh,..." required>
+        </div>
+        <div class="input-group">
+            <label for="birthDate">Tháng/ngày/năm:</label>
+            <input type="date" id="birthDate" required>
+        </div>
+
+        <button id="btn-next" class="btn-submit">Tiếp tục</button>
+    </div>
+
+    <div id="screen-display" class="app-container hidden">
+        <h2>Kết Quả Xác Nhận</h2>
+
+        <p>Xin chào, <span id="res-name" class="user-info"></span>!</p>
+        <p>Ngày sinh của bạn: <span id="res-dob" class="user-info"></span></p>
+
+        <div class="content-box">
+            <h4>Số chủ đạo của bạn là: <span id="res-sum" class="user-info"></span></h4>
+            <p id="content-mainNumber"></p>
+            <ul>
+                <li id="tu-khoa"></li>
+                <li id="nang-luc"></li>
+                <li id="thach-thuc"></li>
+                <li id="bai-hoc"></li>
+            </ul>
+        </div>
+
+        <button id="btn-back" class="btn-submit">Trở lại</button>
+    </div>
+
+    <script type="module">
+        import { getContentMainNumber } from './js/contentMainNumber.js';
+        const nameInput = document.getElementById('name');
+        const dateInput = document.getElementById('birthDate');
+
+        // Hàm tính tổng các chữ số
+        function calculateSum(dateString) {
+            // Lấy chỉ các ký tự số (loại bỏ dấu - từ thẻ input type="date")
+            const digits = dateString.replace(/\D/g, '');
+            let sum = 0;
+
+            for (let char of digits) {
+                sum += parseInt(char);
+            }
+            return sum;
+        }
+
+        // tính số chủ đạo
+        function mainNumber(num) {
+            if (num === 11 || num === 22 || num === 10) {
+                return num;
+            }
+            while (num > 11) {
+                num = num.toString().split('').reduce((acc, digit) => acc + parseInt(digit), 0);
+                // Kiểm tra lại các trường hợp đặc biệt sau khi rút gọn
+                if (num === 11 || num === 22 || num === 10) {
+                    return num;
+                }
+            }
+
+            return num;
+        }
+
+        document.getElementById('btn-next').addEventListener('click', function () {
+            // Lấy giá trị từ các ô nhập liệu
+            const name = nameInput.value.trim();
+            const birthDate = dateInput.value;
+
+            // Kiểm tra xem người dùng đã điền đủ thông tin chưa
+            if (name === "" || birthDate === "") {
+                alert("Vui lòng điền đầy đủ thông tin vào các ô trống!");
+                return;
+            }
+
+            // Tính tổng các chữ số
+            const totalSum = calculateSum(birthDate);
+
+            // Định dạng lại hiển thị ngày tháng năm từ YYYY-MM-DD sang DD/MM/YYYY
+            const dateParts = birthDate.split('-');
+            const formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`;
+
+            // Gán dữ liệu vừa nhập vào giao diện thứ hai
+            document.getElementById('res-name').textContent = name;
+            document.getElementById('res-dob').textContent = formattedDate;
+            document.getElementById('res-sum').textContent = mainNumber(totalSum);
+            document.getElementById('tu-khoa').textContent = getContentMainNumber(mainNumber(totalSum))?.["tu-khoa"] || '';
+            document.getElementById('nang-luc').textContent = getContentMainNumber(mainNumber(totalSum))?.["nang-luc"] || '';
+            document.getElementById('thach-thuc').textContent = getContentMainNumber(mainNumber(totalSum))?.["thach-thuc"] || '';
+            document.getElementById('bai-hoc').textContent = getContentMainNumber(mainNumber(totalSum))?.["bai-hoc"] || '';
+
+            // Thực hiện chuyển đổi giao diện bằng cách ẩn màn hình 1 và hiện màn hình 2
+            document.getElementById('screen-input').classList.add('hidden');
+            document.getElementById('screen-display').classList.remove('hidden');
+        });
+
+        console.log(getContentMainNumber(2));   
+
+        document.getElementById('btn-back').addEventListener('click', function () {
+            // reset
+            // nameInput.value = '';
+            // dateInput.value = '';
+
+            document.getElementById('screen-display').classList.add('hidden');
+            document.getElementById('screen-input').classList.remove('hidden');
+        });
+        // Khi người dùng nhấn nút
+    </script>
+</body>
+
+</html>
