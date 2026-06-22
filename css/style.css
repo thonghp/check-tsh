@@ -1,0 +1,318 @@
+/* --- HỆ BIẾN MÀU SẮC CHUẨN ĐẸP --- */
+:root {
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  --card-bg: #ffffff;
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --border-light: #e2e8f0;
+  --shadow-soft:
+    0 10px 30px -5px rgba(0, 0, 0, 0.05), 0 4px 12px -2px rgba(0, 0, 0, 0.02);
+}
+
+/* --- ĐỊNH DẠNG CHUNG TOÀN TRANG --- */
+body {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  background: var(--bg-gradient);
+  color: var(--text-main);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* Hiệu ứng mờ dần chuyển cảnh */
+.fade-in {
+  animation: fadeIn 0.4s ease-in-out forwards;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- MÀN HÌNH 1: TRANG NHẬP LIỆU (Căn giữa dạng Card) --- */
+.input-card-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.app-container-input {
+  background-color: var(--card-bg);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: var(--shadow-soft);
+  width: 100%;
+  max-width: 420px;
+  box-sizing: border-box;
+}
+
+.header-section {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.header-section h2 {
+  margin: 0 0 8px 0;
+  color: #0f172a;
+  font-size: 26px;
+  font-weight: 700;
+}
+.subtitle {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* Ô nhập liệu chuẩn hóa chữ ở giữa */
+.input-group {
+  margin-bottom: 20px;
+}
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  font-size: 14px;
+}
+.input-group input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  font-size: 15px;
+  outline: none;
+  transition: all 0.2s;
+  background-color: #f8fafc;
+  box-sizing: border-box;
+  font-family: inherit;
+  min-height: 46px;
+}
+.input-group input:focus {
+  border-color: var(--primary);
+  background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  background-color: var(--primary);
+  color: white;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+}
+.btn-submit:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+/* --- MÀN HÌNH 2: TRANG DASHBOARD KẾT QUẢ FULL SCREEN --- */
+.dashboard-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  box-sizing: border-box;
+}
+
+/* Thanh điều hướng Top Bar */
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--card-bg);
+  padding: 20px 30px;
+  border-radius: 16px;
+  box-shadow: var(--shadow-soft);
+  margin-bottom: 25px;
+}
+.greeting-section p {
+  margin: 4px 0;
+}
+.highlight-text {
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 20px;
+}
+.dob-text {
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+.btn-outline-top {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border-light);
+  transition: all 0.2s;
+}
+.btn-outline-top:hover {
+  background-color: #f8fafc;
+  color: var(--text-main);
+  border-color: var(--text-muted);
+}
+
+/* Bố cục chia lưới Grid 2 cột */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 25px;
+  align-items: start;
+}
+
+/* Các vùng Panel nền trắng chứa thông tin */
+.panel-left,
+.panel-right {
+  background-color: var(--card-bg);
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: var(--shadow-soft);
+}
+
+.panel-title {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #0f172a;
+}
+
+/* Căn chỉnh khối Số Chủ Đạo ở cột trái */
+.main-number-showcase {
+  text-align: center;
+  margin-bottom: 35px;
+}
+.number-circle {
+  width: 100px;
+  height: 100px;
+  margin: 15px auto 0 auto;
+  background: linear-gradient(135deg, var(--primary) 0%, #a855f7 100%);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 44px;
+  font-weight: 800;
+  box-shadow: 0 10px 20px rgba(168, 85, 247, 0.25);
+}
+
+/* Thiết kế Biểu đồ ngày sinh vuông vắn chỉn chu */
+.chart-section {
+  text-align: center;
+}
+.pythagoras-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  width: 220px;
+  margin: 15px auto 0 auto;
+  background-color: #f1f5f9;
+  padding: 8px;
+  border-radius: 12px;
+}
+.grid-cell {
+  background-color: #ffffff;
+  aspect-ratio: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--primary);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+/* CỘT PHẢI: Lưới card thuộc tính (2 dòng x 2 cột) */
+.trait-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-bottom: 10px;
+}
+.trait-card {
+  background: #f8fafc;
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  padding: 15px 20px;
+}
+.trait-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+.trait-value {
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.6;
+}
+
+.divider {
+  height: 1px;
+  background-color: var(--border-light);
+  margin: 30px 0;
+}
+
+/* Các đoạn văn giải nghĩa chữ số và mũi tên */
+#occurrence-interpretation p,
+.arrows-result p {
+  background: #f8fafc;
+  padding: 15px 18px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  line-height: 1.6;
+  border-left: 4px solid var(--primary);
+  color: #334155;
+}
+.arrows-result p {
+  border-left-color: #22c55e;
+  background-color: #f0fdf4;
+}
+.arrows-result p.empty-arrow {
+  border-left-color: #ef4444;
+  background-color: #fef2f2;
+}
+
+/* Trạng thái ẩn phần tử */
+.hidden {
+  display: none !important;
+}
+
+/* Hỗ trợ Responsive khi xem trên máy tính bảng hoặc điện thoại nhỏ */
+@media (max-width: 900px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+  .top-nav {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  .trait-grid {
+    grid-template-columns: 1fr;
+  }
+}

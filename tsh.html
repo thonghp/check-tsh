@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thần Số Học Tương Tác - Dashboard</title>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+
+  <body>
+    <div id="screen-input" class="input-card-wrapper fade-in">
+      <div class="app-container-input">
+        <div class="header-section">
+          <h2>Khám Phá Bản Thân</h2>
+          <p class="subtitle">Nhập thông tin để xem biểu đồ Thần Số Học</p>
+        </div>
+
+        <div class="input-group">
+          <label for="name">Tên thường gọi</label>
+          <input
+            type="text"
+            id="name"
+            placeholder="Vd: thong, ngoc anh..."
+            required
+          />
+        </div>
+        <div class="input-group">
+          <label for="birthDate">Ngày sinh của bạn</label>
+          <input type="date" id="birthDate" required />
+        </div>
+
+        <button id="btn-next" class="btn-submit">Phân Tích Ngay</button>
+      </div>
+    </div>
+
+    <div id="screen-display" class="dashboard-wrapper hidden fade-in">
+      <div class="top-nav">
+        <div class="greeting-section">
+          <p>Xin chào, <span id="res-name" class="highlight-text"></span> 👋</p>
+          <p class="dob-text">Sinh ngày: <span id="res-dob"></span></p>
+        </div>
+        <button id="btn-back" class="btn-outline-top">Tra Cứu Lại</button>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="panel-left">
+          <div class="main-number-showcase">
+            <p class="panel-title">Số Chủ Đạo</p>
+            <div class="number-circle">
+              <span id="res-sum"></span>
+            </div>
+          </div>
+
+          <div class="chart-section">
+            <p class="panel-title">🧮 Biểu Đồ Ngày Sinh</p>
+            <div class="pythagoras-grid">
+              <div class="grid-cell" id="cell-3"></div>
+              <div class="grid-cell" id="cell-6"></div>
+              <div class="grid-cell" id="cell-9"></div>
+              <div class="grid-cell" id="cell-2"></div>
+              <div class="grid-cell" id="cell-5"></div>
+              <div class="grid-cell" id="cell-8"></div>
+              <div class="grid-cell" id="cell-1"></div>
+              <div class="grid-cell" id="cell-4"></div>
+              <div class="grid-cell" id="cell-7"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-right">
+          <p class="panel-title">📌 Bản chất & Xu hướng cá nhân</p>
+          <div class="trait-grid">
+            <div class="trait-card">
+              <div class="trait-label">🔑 Từ khóa</div>
+              <div id="tu-khoa" class="trait-value"></div>
+            </div>
+            <div class="trait-card">
+              <div class="trait-label">💼 Năng lực</div>
+              <div id="nang-luc" class="trait-value"></div>
+            </div>
+            <div class="trait-card">
+              <div class="trait-label">⚠️ Thách thức</div>
+              <div id="thach-thuc" class="trait-value"></div>
+            </div>
+            <div class="trait-card">
+              <div class="trait-label">🎯 Bài học</div>
+              <div id="bai-hoc" class="trait-value"></div>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="occurrence-section">
+            <p class="panel-title">📊 Ý nghĩa các con số xuất hiện</p>
+            <div id="occurrence-interpretation"></div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="arrows-section">
+            <p class="panel-title">🏹 Phân tích Mũi tên Cá tính</p>
+            <div id="arrows-interpretation" class="arrows-result"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="./js/app.js"></script>
+  </body>
+</html>
