@@ -323,3 +323,20 @@ body {
   border-left-color: #f59e0b; /* Viền vàng đậm */
   color: #78350f;
 }
+
+/* --- Định dạng cho khu vực Số bị cô lập (Ốc đảo) --- */
+.isolated-result p {
+  background: #f5f3ff; /* Nền tím cực nhạt */
+  padding: 15px 18px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  line-height: 1.6;
+  border-left: 4px solid #8b5cf6; /* Viền tím đậm */
+  color: #334155;
+}
+
+.isolated-result p.no-isolated {
+  background: #f8fafc;
+  border-left-color: #94a3b8; /* Viền xám nếu không có ốc đảo */
+}

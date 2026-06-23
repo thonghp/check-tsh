@@ -1,6 +1,7 @@
 import { getContentMainNumber } from "./contentMainNumber.js";
 import { getContentOccurrenceNumber, missingNumbers } from "./contentNumber.js";
 import { completedArrows, emptyArrows } from "./contentArrows.js";
+import { isolatedNumbers } from "./contentIsolated.js";
 
 const nameInput = document.getElementById("name");
 const dateInput = document.getElementById("birthDate");
@@ -167,6 +168,46 @@ document.getElementById("btn-next").addEventListener("click", function () {
   if (!hasAnyArrow) {
     arrowsDiv.innerHTML =
       "<p style='background: #f8fafc; border-left: 3px solid #94a3b8;'>Không có Mũi tên cá tính nổi bật hoặc khuyết hoàn toàn trên biểu đồ này.</p>";
+  }
+
+  // --- 3. THUẬT TOÁN QUÉT SỐ BỊ CÔ LẬP (ỐC ĐẢO) ---
+  const isolatedDiv = document.getElementById("isolated-interpretation");
+  isolatedDiv.innerHTML = ""; // Xóa dữ liệu cũ
+  let hasIsolated = false;
+
+  // Lặp qua từng trường hợp số cô lập đã định nghĩa
+  for (let num in isolatedNumbers) {
+    const data = isolatedNumbers[num];
+    const targetNumber = parseInt(num);
+
+    // ĐIỀU KIỆN 1: Số đó PHẢI XUẤT HIỆN trong biểu đồ
+    if (digitCounts[targetNumber] > 0) {
+      // ĐIỀU KIỆN 2: Tất cả các ô xung quanh (trong mảng emptyReq) PHẢI TRỐNG
+      let isIsolated = true;
+      for (let emptyCell of data.emptyReq) {
+        if (digitCounts[emptyCell] > 0) {
+          isIsolated = false; // Phát hiện có số ở ô kề bên -> Không bị cô lập
+          break;
+        }
+      }
+
+      // Nếu thỏa mãn cả 2 điều kiện -> In ra màn hình
+      if (isIsolated) {
+        const p = document.createElement("p");
+        p.innerHTML = `<strong>Số ${targetNumber} cô lập (Trống ${data.emptyReq.join("")}):</strong> ${data.content}`;
+        isolatedDiv.appendChild(p);
+        hasIsolated = true;
+      }
+    }
+  }
+
+  // Nếu biểu đồ liên kết tốt, không có ốc đảo nào
+  if (!hasIsolated) {
+    const p = document.createElement("p");
+    p.className = "no-isolated";
+    p.innerHTML =
+      "Không có con số nào bị cô lập. Các nguồn năng lượng trên biểu đồ của bạn đều có sự liên kết và hỗ trợ lẫn nhau.";
+    isolatedDiv.appendChild(p);
   }
 
   // Chuyển màn hình giao diện
