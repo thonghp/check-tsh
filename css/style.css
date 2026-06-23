@@ -316,3 +316,10 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+/* Định dạng cho con số bị thiếu */
+#occurrence-interpretation p.missing-number {
+  background-color: #fffbeb; /* Vàng nhạt */
+  border-left-color: #f59e0b; /* Viền vàng đậm */
+  color: #78350f;
+}

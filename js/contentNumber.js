@@ -69,4 +69,16 @@ const getContentOccurrenceNumber = (mainNum) => {
   return mainNumber[mainNum];
 };
 
-export { getContentOccurrenceNumber };
+const missingNumbers = {
+  1: "Thiếu số 1: Thiếu sự quyết đoán, đôi khi thấy lạc lõng hoặc khó khẳng định bản tính cá nhân trước đám đông. Cần học cách tự lập và tin vào chính mình => điền số 1 ảo bằng cách tập viết nhật ký (viết điều mình chưa làm hoặc hối tiếc đã làm trong ngày), tập bày tỏ quan điểm cá nhân bộc lộ vui buồn rõ ràng hơn",
+  2: "Thiếu số 2: Thiếu sự nhạy cảm và thấu cảm. Thường có xu hướng nhìn nhận cuộc sống một cách máy móc, logic thuần túy mà bỏ qua các tín hiệu từ cảm xúc hoặc linh tính. Cần học cách lắng nghe và kiên nhẫn hơn.",
+  3: "Thiếu số 3: Thiếu động lực sáng tạo hoặc gặp khó khăn trong việc tiếp thu các kiến thức học thuật khô khan. Cần kích thích bởi những sở thích mớ => điền số 3 ảo bằng cách kiếm cái gì đó để học",
+  4: "Thiếu số 4: Thiếu tính thực tế, làm việc hay tùy hứng, thiếu kiên nhẫn với các chi tiết tỉ mỉ, thường gặp khó khăn trong việc quản lý tài chính hoặc duy trì một nếp sống ngăn nắp => điền số 4 ảo bằng cách thấy người ta làm gì thì mình nhào vô làm phụ người khác, chủ động dọn dẹp làm việc chân tay",
+  5: "Thiếu số 5: khó biểu đạt cảm xúc, cần sự thúc đẩy mạnh mẽ từ người khác mới có thể hành động. Dễ cảm thấy bị ngăn cách với thế giới xung quanh => điền số 5 ảo bằng cách mở lòng, chịu khó kết nối với mọi người xung quanh, chịu khó đứng trước đám đông bày tỏ cảm xúc của mình, chịu khó tập yoga, chịu khó tập các động tác nơi cổ để thông suốt",
+  6: "Thiếu số 6: thiếu sự quan tâm đúng mực đến gia đình hoặc thiếu đi sự tinh tế trong thẩm mỹ. Đôi khi họ sống hơi tách biệt. Cần học cách yêu thương, chăm sóc người khác một cách chủ động hơn => điền số 6 ảo bằng cách tìm cái gì sáng tạo để làm như vẽ, sáng tác, thêu, làm vườn hay làm việc nhà như rửa chén, nấu cơm để kết nối với gia đình, học lan toả tình yêu thương",
+  7: "Thiếu số 7: Ngại thay đổi, ngại dấn thân vào những trải nghiệm mới nếu thấy có rủi ro => điền số 7 ảo bằng cách tự mình lao vào trải nghiệm",
+  8: "Thiếu số 8: Thiếu tính độc lập trong suy nghĩ, dễ bị lung lay bởi ý kiến của người khác, gặp khó khăn trong việc điều hành công việc hoặc quản lý các nguồn lực lớn => điền số 8 ảo bằng cách lĩnh hội được khi học được từ đọc kinh chú",
+  9: "Thiếu số 9: Thiếu mục đích lớn, thiếu trách nhiệm với cộng đồng, chỉ quan tâm đến những lợi ích nhỏ trước mắt. Cần học cách xây dựng lý tưởng sống => điền số 9 ảo bằng cách Tập lên kế hoạch nhỏ và làm liền cho tới nơi tới chốn",
+};
+
+export { getContentOccurrenceNumber, missingNumbers };

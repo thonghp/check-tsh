@@ -1,5 +1,5 @@
 import { getContentMainNumber } from "./contentMainNumber.js";
-import { getContentOccurrenceNumber } from "./contentNumber.js";
+import { getContentOccurrenceNumber, missingNumbers } from "./contentNumber.js";
 import { completedArrows, emptyArrows } from "./contentArrows.js";
 
 const nameInput = document.getElementById("name");
@@ -80,24 +80,43 @@ document.getElementById("btn-next").addEventListener("click", function () {
   document.getElementById("bai-hoc").textContent =
     mainNumData?.["bai-hoc"] || "Chưa có dữ liệu";
 
-  // Xử lý đổ dữ liệu luận giải số lần xuất hiện
+  // Xử lý đổ dữ liệu luận giải số lần xuất hiện và số bị thiếu
   const digitCounts = countDigits(birthDate);
   const interpretationDiv = document.getElementById(
     "occurrence-interpretation",
   );
   interpretationDiv.innerHTML = "";
 
-  for (let num in digitCounts) {
-    const times = digitCounts[num];
-    const numberGroup = getContentOccurrenceNumber(num);
+  // Quét từ 1 đến 9 để lấy CẢ SỐ CÓ MẶT VÀ SỐ BỊ THIẾU
+  for (let i = 1; i <= 9; i++) {
+    const times = digitCounts[i] || 0; // Lấy số lần xuất hiện, nếu không có là 0
+    const p = document.createElement("p");
 
-    if (numberGroup) {
-      const textDetail = numberGroup[times];
-      if (textDetail) {
-        const p = document.createElement("p");
-        p.innerHTML = `<strong>Số ${num} (${times} lần):</strong> ${textDetail}`;
+    if (times > 0) {
+      // TRƯỜNG HỢP 1: CÓ XUẤT HIỆN
+      const numberGroup = getContentOccurrenceNumber(i);
+      if (numberGroup) {
+        let textDetail = numberGroup[times];
+
+        // Xử lý dự phòng nếu số lần xuất hiện nhiều hơn dữ liệu bạn có (Vd: xuất hiện 5 lần nhưng data chỉ có đến 3)
+        if (!textDetail) {
+          // Lấy nội dung của số lần xuất hiện cao nhất mà bạn đã khai báo
+          const maxTimesMap = Object.keys(numberGroup).reduce((a, b) =>
+            Math.max(a, b),
+          );
+          textDetail =
+            numberGroup[maxTimesMap] +
+            ` (Năng lượng cực kỳ mạnh do xuất hiện đến ${times} lần)`;
+        }
+
+        p.innerHTML = `<strong>Số ${i} (${times} lần):</strong> ${textDetail}`;
         interpretationDiv.appendChild(p);
       }
+    } else {
+      // TRƯỜNG HỢP 2: SỐ BỊ THIẾU (times = 0)
+      p.className = "missing-number"; // Gán class vàng hổ phách để khác biệt
+      p.innerHTML = `<strong>${missingNumbers[i]}</strong>`;
+      interpretationDiv.appendChild(p);
     }
   }
 
