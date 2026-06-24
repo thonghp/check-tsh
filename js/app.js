@@ -6,6 +6,45 @@ import { isolatedNumbers } from "./contentIsolated.js";
 const nameInput = document.getElementById("name");
 const dateInput = document.getElementById("birthDate");
 
+// BẢNG QUY ĐỔI CHỮ CÁI SANG SỐ THEO HỆ PYTHAGORAS CỦA BẠN
+const alphabetMapping = {
+  A: 1,
+  J: 1,
+  S: 1,
+  B: 2,
+  K: 2,
+  T: 2,
+  C: 3,
+  L: 3,
+  U: 3,
+  D: 4,
+  M: 4,
+  V: 4,
+  E: 5,
+  N: 5,
+  W: 5,
+  F: 6,
+  O: 6,
+  X: 6,
+  G: 7,
+  P: 7,
+  Y: 7,
+  H: 8,
+  Q: 8,
+  Z: 8,
+  I: 9,
+  R: 9,
+};
+
+// Hàm loại bỏ dấu tiếng Việt chuẩn xác để chuyển đổi chữ cái lạt-tinh chuẩn
+function removeVietnameseTones(str) {
+  return str
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/đ/g, "d")
+    .replace(/Đ/g, "D");
+}
+
 // Hàm tính tổng các chữ số
 function calculateSum(dateString) {
   const digits = dateString.replace(/\D/g, "");
@@ -43,6 +82,23 @@ function countDigits(dateString) {
       countMap[char] += 1;
     } else {
       countMap[char] = 1;
+    }
+  }
+  return countMap;
+}
+
+// THÊM MỚI: Hàm đếm các con số được chuyển đổi từ Tên gọi
+function countNameDigits(nameString) {
+  const cleanName = removeVietnameseTones(nameString).toUpperCase();
+  const countMap = {};
+  for (let char of cleanName) {
+    const numStr = alphabetMapping[char];
+    if (numStr) {
+      if (countMap[numStr]) {
+        countMap[numStr] += 1;
+      } else {
+        countMap[numStr] = 1;
+      }
     }
   }
   return countMap;
@@ -121,7 +177,7 @@ document.getElementById("btn-next").addEventListener("click", function () {
     }
   }
 
-  // --- 1. ĐIỀN SỐ VÀO BIỂU ĐỒ 3x3 ---
+  // --- 1. ĐIỀN SỐ VÀO BIỂU ĐỒ 1: BIỂU ĐỒ NGÀY SINH ---
   for (let i = 1; i <= 9; i++) {
     const cell = document.getElementById(`cell-${i}`);
     // Nếu số xuất hiện n lần, lặp lại nó n lần (VD: "1" xuất hiện 2 lần -> "11")
@@ -129,6 +185,21 @@ document.getElementById("btn-next").addEventListener("click", function () {
       cell.textContent = String(i).repeat(digitCounts[i]);
     } else {
       cell.textContent = ""; // Để trống nếu không có số
+    }
+  }
+
+  // --- THÊM MỚI: TÍNH TOÁN & ĐIỀN SỐ VÀO BIỂU ĐỒ 2 (NGÀY SINH + TÊN) ---
+  const nameCounts = countNameDigits(name);
+  for (let i = 1; i <= 9; i++) {
+    const combCell = document.getElementById(`comb-cell-${i}`);
+    const dateOccur = digitCounts[i] || 0;
+    const nameOccur = nameCounts[i] || 0;
+    const totalOccur = dateOccur + nameOccur;
+
+    if (totalOccur > 0) {
+      combCell.textContent = String(i).repeat(totalOccur);
+    } else {
+      combCell.textContent = "";
     }
   }
 
