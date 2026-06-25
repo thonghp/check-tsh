@@ -2,6 +2,7 @@ import { getContentMainNumber } from "./contentMainNumber.js";
 import { getContentOccurrenceNumber, missingNumbers } from "./contentNumber.js";
 import { completedArrows, emptyArrows } from "./contentArrows.js";
 import { isolatedNumbers } from "./contentIsolated.js";
+import { personalYearContent } from "./contentYear.js";
 
 const nameInput = document.getElementById("name");
 const dateInput = document.getElementById("birthDate");
@@ -102,6 +103,65 @@ function countNameDigits(nameString) {
     }
   }
   return countMap;
+}
+
+// Hàm rút gọn con số về dải từ 1 đến 9 theo quy tắc tính năm
+function reduceToSingleDigit(num) {
+  while (num > 9) {
+    num = num.toString().split('').reduce((acc, d) => acc + parseInt(d), 0);
+  }
+  return num;
+}
+
+// Hàm sinh biểu đồ sóng chu kỳ và highlight năm cá nhân hiện tại màu đỏ
+function drawWaveChart(activeYear) {
+  const container = document.getElementById("wave-chart-container");
+
+  // Tọa độ các điểm nút (X, Y) trên đồ thị khớp chính xác hình dáng lượn sóng của bạn
+  const points = [
+    { year: 9, x: 35, y: 40, pos: 'left', label: '9' },
+    { year: 1, x: 95, y: 55, pos: 'top', label: '1' },
+    { year: 2, x: 145, y: 90, pos: 'right', label: '2' },
+    { year: 3, x: 195, y: 130, pos: 'left', label: '3' },
+    { year: 4, x: 245, y: 160, pos: 'bottom', label: '4' }, // Điểm trũng 4
+    { year: 5, x: 305, y: 135, pos: 'right', label: '5' },
+    { year: 6, x: 365, y: 105, pos: 'top', label: '6' }, // Đỉnh phụ 6
+    { year: 7, x: 425, y: 160, pos: 'bottom', label: '7' }, // Điểm trũng 7
+    { year: 8, x: 485, y: 85, pos: 'right', label: '8' },
+    { year: 9, x: 550, y: 35, pos: 'top', label: '9' }  // Đỉnh cao 9
+  ];
+
+  let svgHtml = `
+    <svg viewBox="0 0 580 200" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" style="background: #f8fafc; border-radius: 8px; padding: 10px;">
+      <path d="M 35 40 C 75 40, 75 40, 95 55 C 135 75, 165 105, 195 130 C 215 150, 225 160, 245 160 C 265 160, 285 150, 305 135 C 335 110, 345 105, 365 105 C 385 105, 405 120, 425 160 C 445 200, 465 130, 485 85 C 515 35, 535 35, 550 35" 
+            fill="none" stroke="#475569" stroke-width="4" stroke-linecap="round"/>
+  `;
+
+  // Duyệt qua danh sách điểm để vẽ text và chấm tròn
+  points.forEach((p, index) => {
+    // Nếu trùng năm cá nhân (ưu tiên highlight nút cuối nếu rơi vào năm 9)
+    const isActive = (p.year === activeYear && (activeYear !== 9 || index === 9 || index === 0));
+    const nodeColor = isActive ? "#ef4444" : "#000000";
+    const nodeRadius = isActive ? "7" : "5";
+    const textWeight = isActive ? "bold" : "normal";
+    const textSize = isActive ? "16px" : "13px";
+
+    // Tính toán độ lệch vị trí nhãn chữ để không đè lên đường sóng
+    let tx = p.x;
+    let ty = p.y;
+    if (p.pos === 'top') ty -= 14;
+    if (p.pos === 'bottom') ty += 20;
+    if (p.pos === 'left') { tx -= 14; ty += 5; }
+    if (p.pos === 'right') { tx += 14; ty += 5; }
+
+    svgHtml += `
+      <circle cx="${p.x}" cy="${p.y}" r="${nodeRadius}" fill="${nodeColor}" />
+      <text x="${tx}" y="${ty}" fill="${nodeColor}" font-size="${textSize}" font-weight="${textWeight}" text-anchor="middle">${p.label}</text>
+    `;
+  });
+
+  svgHtml += `</svg>`;
+  container.innerHTML = svgHtml;
 }
 
 // Xử lý sự kiện khi nhấn nút "Tiếp tục"
@@ -280,6 +340,37 @@ document.getElementById("btn-next").addEventListener("click", function () {
       "Không có con số nào bị cô lập. Các nguồn năng lượng trên biểu đồ của bạn đều có sự liên kết và hỗ trợ lẫn nhau.";
     isolatedDiv.appendChild(p);
   }
+
+  // --- 4. THUẬT TOÁN TÍNH NĂM THẾ GIỚI & NĂM CÁ NHÂN ---
+  const currentYear = 2026; // Đồng bộ thời gian hệ thống thực tế năm 2026
+  const worldYear = reduceToSingleDigit(currentYear); // 2 + 0 + 2 + 6 = 10 -> 1
+
+  // Bóc tách ngày tháng sinh từ mảng dữ liệu dateParts đã được xử lý phía trên (định dạng YYYY-MM-DD)
+  const birthDay = parseInt(dateParts[2]);
+  const birthMonth = parseInt(dateParts[1]);
+
+  // Công thức: Năm cá nhân = Năm thế giới + Tháng sinh + Ngày sinh
+  const personalYear = reduceToSingleDigit(worldYear + birthMonth + birthDay);
+
+  // Hiển thị chỉ số ra màn hình
+  document.getElementById("res-world-year").textContent = `${worldYear} (Từ năm gốc ${currentYear})`;
+  document.getElementById("res-personal-year").textContent = personalYear;
+
+  // Đổ nội dung luận giải tương ứng
+  document.getElementById("personal-year-text").innerHTML = personalYearContent[personalYear];
+
+  // Thay đổi màu sắc hộp nội dung linh hoạt nếu rơi vào năm trũng (4, 7) để cảnh báo người dùng trực quan
+  const infoBox = document.getElementById("personal-year-box");
+  if (personalYear === 4 || personalYear === 7) {
+    infoBox.style.backgroundColor = "#fff7ed"; // Nền cam nhạt báo hiệu điểm trũng
+    infoBox.style.borderLeftColor = "#f97316"; // Viền cam đậm
+  } else {
+    infoBox.style.backgroundColor = "#fef2f2"; // Nền đỏ nhạt tiêu chuẩn chu kỳ
+    infoBox.style.borderLeftColor = "#ef4444"; // Viền đỏ tiêu chuẩn
+  }
+
+  // Gọi hàm vẽ đồ thị hình sóng sin sắc nét lên giao diện
+  drawWaveChart(personalYear);
 
   // Chuyển màn hình giao diện
   document.getElementById("screen-input").classList.add("hidden");
