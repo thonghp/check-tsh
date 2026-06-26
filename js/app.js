@@ -4,12 +4,13 @@ import { completedArrows, emptyArrows } from "./contentArrows.js";
 import { isolatedNumbers } from "./contentIsolated.js";
 import { personalYearContent } from "./contentYear.js";
 import { peakNumbersContent } from "./contentPeak.js";
+import { soulContent, expressContent } from "./contentName.js";
 
 const nameInput = document.getElementById("name");
 const dateInput = document.getElementById("birthDate");
 
 // BẢNG QUY ĐỔI CHỮ CÁI SANG SỐ THEO HỆ PYTHAGORAS CỦA BẠN
-const alphabetMapping = {
+const pythagoreanMap = {
   A: 1,
   J: 1,
   S: 1,
@@ -94,7 +95,7 @@ function countNameDigits(nameString) {
   const cleanName = removeVietnameseTones(nameString).toUpperCase();
   const countMap = {};
   for (let char of cleanName) {
-    const numStr = alphabetMapping[char];
+    const numStr = pythagoreanMap[char];
     if (numStr) {
       if (countMap[numStr]) {
         countMap[numStr] += 1;
@@ -361,6 +362,93 @@ function drawPyramidChart(birthDateStr, mainNum) {
     `</div>`;
 }
 
+// Hàm rút gọn theo quy tắc: 1 <= x <= 11 và số đặc biệt 22
+function reduceNameNumber(num) {
+  if (num === 22) return 22;
+  while (num > 11 && num !== 22) {
+    num = num.toString().split('').reduce((acc, d) => acc + parseInt(d), 0);
+  }
+  return num;
+}
+
+// Hàm phân tích tên gọi (Đã fix lỗi Case Sensitivity)
+function analyzeName(fullName) {
+  // ÉP TOÀN BỘ VỀ IN HOA ĐỂ KHỚP VỚI BẢNG MAP VÀ MẢNG NGUYÊN ÂM
+  const cleanName = removeVietnameseTones(fullName).toUpperCase();
+  const words = cleanName.trim().split(/\s+/);
+
+  let soulSum = 0;    // Tổng nguyên âm
+  let expressSum = 0; // Tổng phụ âm
+
+  words.forEach(word => {
+    for (let i = 0; i < word.length; i++) {
+      const char = word[i];
+
+      if (!pythagoreanMap[char]) continue; // Bỏ qua ký tự lạ (khoảng trắng, số...)
+
+      const val = pythagoreanMap[char];
+      let isVowel = false;
+
+      // Đã đổi sang mảng nguyên âm IN HOA
+      if (['U', 'E', 'O', 'A', 'I'].includes(char)) {
+        isVowel = true;
+      }
+      // Chữ Y IN HOA cũng phải check
+      else if (char === 'Y' && i === word.length - 1) {
+        isVowel = true;
+      }
+
+      if (isVowel) {
+        soulSum += val;
+      } else {
+        expressSum += val;
+      }
+    }
+  });
+
+  const soulNumber = reduceNameNumber(soulSum);
+  const expressNumber = reduceNameNumber(expressSum);
+  const nameNumber = reduceNameNumber(soulNumber + expressNumber);
+
+  return { soulNumber, expressNumber, nameNumber };
+}
+
+// Hàm render UI xuất kết quả ra màn hình
+function renderNameAnalysis(fullName) {
+  const indices = analyzeName(fullName);
+  const soulText = soulContent[indices.soulNumber] || "Chưa có dữ liệu giải mã.";
+  const expressText = expressContent[indices.expressNumber] || "Chưa có dữ liệu giải mã.";
+  const nameContainer = document.getElementById("name-analysis-container");
+
+  // Nếu không tìm thấy container thì thoát hàm để tránh lỗi
+  if (!nameContainer) return;
+
+  nameContainer.innerHTML = `
+    <div style="margin-top: 30px; width: 100%; text-align: left;">
+      <div style="padding: 20px; background-color: #f0fdf4; border-radius: 8px; border-left: 5px solid #22c55e;">
+        <h4 style="margin: 0 0 15px 0; color: #14532d; font-size: 16px; font-weight: 700;">👤 Phân Tích Chỉ Số Tên Gọi: ${fullName.toUpperCase()}</h4>
+        
+        <div style="display: flex; flex-direction: column; gap: 15px;">
+          <div style="border-bottom: 1px dashed #bbf7d0; padding-bottom: 10px;">
+             <span style="display: inline-block; background: #22c55e; color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 13px; font-weight: bold; margin-bottom: 5px;">CHỈ SỐ TÊN: ${indices.nameNumber}</span>
+             <p style="margin: 5px 0 0 0; font-size: 14px; color: #064e3b; font-style: italic;">(Tổng hòa giữa Tâm hồn [${indices.soulNumber}] và Thể hiện [${indices.expressNumber}])</p>
+          </div>
+
+          <div style="border-bottom: 1px dashed #bbf7d0; padding-bottom: 10px;">
+            <span style="display: inline-block; background: #0ea5e9; color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 13px; font-weight: bold; margin-bottom: 5px;">CHỈ SỐ TÂM HỒN: ${indices.soulNumber}</span>
+            <p style="margin: 5px 0 0 0; font-size: 14px; color: #0c4a6e; line-height: 1.6;"><strong>Ý nghĩa:</strong> ${soulText}</p>
+          </div>
+
+          <div>
+            <span style="display: inline-block; background: #f59e0b; color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 13px; font-weight: bold; margin-bottom: 5px;">CHỈ SỐ THỂ HIỆN: ${indices.expressNumber}</span>
+            <p style="margin: 5px 0 0 0; font-size: 14px; color: #78350f; line-height: 1.6;"><strong>Ý nghĩa:</strong> ${expressText}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 // Xử lý sự kiện khi nhấn nút "Tiếp tục"
 document.getElementById("btn-next").addEventListener("click", function () {
   const name = nameInput.value.trim();
@@ -574,6 +662,8 @@ document.getElementById("btn-next").addEventListener("click", function () {
   // --- 5. TÍNH TOÁN VÀ VẼ KIM TỰ THÁP 4 ĐỈNH CAO ---
   // Truyền ngày sinh nguyên bản và số chủ đạo đã tính vào hàm
   drawPyramidChart(birthDate, mainNum);
+
+  renderNameAnalysis(name);
 
   // Chuyển màn hình giao diện
   document.getElementById("screen-input").classList.add("hidden");
