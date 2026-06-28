@@ -160,20 +160,43 @@ document.getElementById("btn-next").addEventListener("click", function () {
   }
 
   // =====================================================================
-  // --- THỰC THI GỌI HÀM VÀ ĐỔ DỮ LIỆU RA GIAO DIỆN ---
+  // --- THỰC THI GỌI HÀM VÀ ĐỔ DỮ LIỆU (CHUYỂN SANG GIAO DIỆN SONG SONG) ---
   // =====================================================================
 
+  // Hàm chia layout thành 2 cột Trái - Phải và tự động xuống hàng trên Mobile (Responsive)
+  function createSplitLayout(leftHtml, rightHtml) {
+    return `
+      <div style="display: flex; gap: 20px; flex-wrap: wrap; width: 100%; margin-top: 12px; margin-bottom: 20px;">
+        <div style="flex: 1; min-width: 300px; background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 18px; border-radius: 10px; box-sizing: border-box;">
+          ${leftHtml}
+        </div>
+        <div style="flex: 1; min-width: 300px; background-color: #f0fdf4; border: 1px solid #dcfce7; padding: 18px; border-radius: 10px; box-sizing: border-box;">
+          ${rightHtml}
+        </div>
+      </div>
+    `;
+  }
+
+  // Đổ dữ liệu Ý nghĩa các con số
   document.getElementById("occurrence-interpretation").innerHTML =
-    renderOccurrenceHTML(digitCounts, "Dựa trên Biểu Đồ Ngày Sinh") +
-    renderOccurrenceHTML(combinedCounts, "Dựa trên Biểu Đồ Ngày Sinh + Tên");
+    createSplitLayout(
+      renderOccurrenceHTML(digitCounts, "Bản Nguyên: Biểu Đồ Ngày Sinh"),
+      renderOccurrenceHTML(combinedCounts, "Dịch Chuyển: Ngày Sinh + Tên Gọi"),
+    );
 
+  // Đổ dữ liệu Mũi tên cá tính
   document.getElementById("arrows-interpretation").innerHTML =
-    renderArrowsHTML(digitCounts, "Dựa trên Biểu Đồ Ngày Sinh") +
-    renderArrowsHTML(combinedCounts, "Dựa trên Biểu Đồ Ngày Sinh + Tên");
+    createSplitLayout(
+      renderArrowsHTML(digitCounts, "Bản Nguyên: Mũi Tên Ngày Sinh"),
+      renderArrowsHTML(combinedCounts, "Dịch Chuyển: Mũi Tên Ngày Sinh + Tên"),
+    );
 
+  // Đổ dữ liệu Các số bị cô lập
   document.getElementById("isolated-interpretation").innerHTML =
-    renderIsolatedHTML(digitCounts, "Dựa trên Biểu Đồ Ngày Sinh") +
-    renderIsolatedHTML(combinedCounts, "Dựa trên Biểu Đồ Ngày Sinh + Tên");
+    createSplitLayout(
+      renderIsolatedHTML(digitCounts, "Bản Nguyên: Ốc Đảo Ngày Sinh"),
+      renderIsolatedHTML(combinedCounts, "Dịch Chuyển: Ốc Đảo Ngày Sinh + Tên"),
+    );
 
   // --- 4. THUẬT TOÁN TÍNH NĂM THẾ GIỚI & NĂM CÁ NHÂN ---
   const currentYear = 2026; // Đồng bộ thời gian hệ thống thực tế năm 2026
