@@ -37,14 +37,18 @@ document.getElementById("btn-next").addEventListener("click", function () {
 
   // Đổ dữ liệu chi tiết của số chủ đạo
   const mainNumData = getContentMainNumber(mainNum);
-  document.getElementById("tu-khoa").textContent =
-    mainNumData?.["tu-khoa"] || "Chưa có dữ liệu";
-  document.getElementById("nang-luc").textContent =
-    mainNumData?.["nang-luc"] || "Chưa có dữ liệu";
+  document.getElementById("vai-tro").textContent =
+    mainNumData?.["vai-tro"] || "Chưa có dữ liệu";
+  document.getElementById("bieu-hien").textContent =
+    mainNumData?.["bieu-hien"] || "Chưa có dữ liệu";
+  document.getElementById("dac-diem").textContent =
+    mainNumData?.["dac-diem"] || "Chưa có dữ liệu";
   document.getElementById("thach-thuc").textContent =
     mainNumData?.["thach-thuc"] || "Chưa có dữ liệu";
-  document.getElementById("bai-hoc").textContent =
-    mainNumData?.["bai-hoc"] || "Chưa có dữ liệu";
+  document.getElementById("dinh-huong").textContent =
+    mainNumData?.["dinh-huong"] || "Chưa có dữ liệu";
+  document.getElementById("nghe-nghiep").textContent =
+    mainNumData?.["nghe-nghiep"] || "Chưa có dữ liệu";
 
   // --- LẤY DỮ LIỆU ĐẾM SỐ ---
   const digitCounts = Calc.countDigits(birthDate); // Đếm từ ngày sinh
