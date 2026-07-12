@@ -2,24 +2,24 @@ import { peakNumbersContent } from "../data/contentPeak.js";
 
 // Hàm rút gọn về dải 1 đến 9 (Dùng cho Tầng đáy và Tầng 1)
 function reduceTo9(num) {
-    while (num > 9) {
-        num = num
-            .toString()
-            .split("")
-            .reduce((acc, d) => acc + parseInt(d), 0);
-    }
-    return num;
+  while (num > 9) {
+    num = num
+      .toString()
+      .split("")
+      .reduce((acc, d) => acc + parseInt(d), 0);
+  }
+  return num;
 }
 
 // Hàm rút gọn có giữ lại số 10 và 11 (Dùng cho Tầng 2 và Tầng 3)
 function reduceTo11(num) {
-    while (num > 11) {
-        num = num
-            .toString()
-            .split("")
-            .reduce((acc, d) => acc + parseInt(d), 0);
-    }
-    return num;
+  while (num > 11) {
+    num = num
+      .toString()
+      .split("")
+      .reduce((acc, d) => acc + parseInt(d), 0);
+  }
+  return num;
 }
 
 // Hàm sinh biểu đồ sóng chu kỳ và highlight năm cá nhân hiện tại màu đỏ
@@ -209,7 +209,7 @@ function drawPyramidChart(birthDateStr, mainNum) {
       </div>
 
       <div style="padding: 20px; background-color: #fdf2f8; border-radius: 8px; border-left: 5px solid #db2777;">
-        <h4 style="margin: 0 0 15px 0; color: #831843; font-size: 16px; font-weight: 700;">🔮 Ý nghĩa các con số trong đỉnh cao của bạn</h4>
+        <h4 style="margin: 0 0 15px 0; color: #831843; font-size: 16px; font-weight: 700;">🔮 Ý nghĩa các con số trong đỉnh cao của bạn <a target="_blank" href="https://github.com/thonghp/tsh/blob/main/day8.md">Xem thêm</a></h4>
         
         <div style="display: flex; flex-direction: column; gap: 15px;">
           <div style="border-bottom: 1px dashed #fbcfe8; padding-bottom: 10px;">

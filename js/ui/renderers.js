@@ -3,18 +3,20 @@ import { soulContent, expressContent } from "../data/contentName.js";
 
 // Hàm render UI xuất kết quả ra màn hình
 function renderNameAnalysis(fullName) {
-    const indices = analyzeName(fullName);
-    const soulText = soulContent[indices.soulNumber] || "Chưa có dữ liệu giải mã.";
-    const expressText = expressContent[indices.expressNumber] || "Chưa có dữ liệu giải mã.";
-    const nameContainer = document.getElementById("name-analysis-container");
+  const indices = analyzeName(fullName);
+  const soulText =
+    soulContent[indices.soulNumber] || "Chưa có dữ liệu giải mã.";
+  const expressText =
+    expressContent[indices.expressNumber] || "Chưa có dữ liệu giải mã.";
+  const nameContainer = document.getElementById("name-analysis-container");
 
-    // Nếu không tìm thấy container thì thoát hàm để tránh lỗi
-    if (!nameContainer) return;
+  // Nếu không tìm thấy container thì thoát hàm để tránh lỗi
+  if (!nameContainer) return;
 
-    nameContainer.innerHTML = `
+  nameContainer.innerHTML = `
     <div style="margin-top: 30px; width: 100%; text-align: left;">
       <div style="padding: 20px; background-color: #f0fdf4; border-radius: 8px; border-left: 5px solid #22c55e;">
-        <h4 style="margin: 0 0 15px 0; color: #14532d; font-size: 16px; font-weight: 700;">👤 Phân Tích Chỉ Số Tên Gọi: ${fullName.toUpperCase()}</h4>
+        <h4 style="margin: 0 0 15px 0; color: #14532d; font-size: 16px; font-weight: 700;">👤 Phân Tích Chỉ Số Tên Gọi: ${fullName.toUpperCase()} <a target="_blank" href="https://github.com/thonghp/tsh/blob/main/day6.md">Xem thêm</a></h4>
         
         <div style="display: flex; flex-direction: column; gap: 15px;">
           <div style="border-bottom: 1px dashed #bbf7d0; padding-bottom: 10px;">
