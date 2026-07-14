@@ -2,11 +2,11 @@ const so2 = {
   "vai-tro":
     "Có khả năng đặc biệt trong việc làm việc dưới sự hướng dẫn của những nhà lãnh đạo năng động. Vai trò của họ là bổ sung và cung cấp sự hỗ trợ tận tâm, trực giác.",
   "bieu-hien":
-    "Cực kỳ tự tin khi được làm việc theo nhịp độ tự nhiên của riêng mình (làm việc độc lập), không chịu được áp lực căng thẳng.",
+    "Cực kỳ tự tin khi được <strong>làm việc theo nhịp độ tự nhiên của riêng mình (làm việc độc lập 1 mình), không chịu được áp lực căng thẳng</strong>.",
   "dac-diem":
-    "Nhạy cảm, trực giác tốt, có khả năng cảm nhận tâm trạng của người khác mà không cần lời nói, đáng tin cậy trung thành, cái tôi không lớn, giàu lòng trắc ẩn và là người hòa giải.",
+    "Nhạy cảm, trực giác tốt, có <strong>khả năng cảm nhận tâm trạng của người khác mà không cần lời nói</strong>, đáng tin cậy trung thành, cái tôi không lớn, giàu lòng trắc ẩn và là người hòa giải.",
   "thach-thuc":
-    "Dễ trở nên bất mãn, cáu kỉnh nếu bị cuốn vào chủ nghĩa vật chất hoặc cái tôi sai lệch. Dễ sai lầm nếu dựa vào lý trí thay vì trực giác. Thiếu tự tin đôi khi đánh giá thấp năng lực của bản thân. Dễ bị tác động bởi môi trường tiêu cực.",
+    "Dễ trở nên bất mãn, cáu kỉnh nếu bị cuốn vào chủ nghĩa vật chất hoặc cái tôi sai lệch. Dễ sai lầm nếu dựa vào lý trí thay vì trực giác. Thiếu tự tin đôi khi đánh giá thấp năng lực của bản thân. <strong>Dễ bị tác động bởi môi trường tiêu cực.</strong>",
   "dinh-huong":
     "Học cách tin tưởng vào trực giác, học cách kiểm soát cảm xúc và rèn luyện trí nhớ tư duy độc lập và năng lực biểu đạt cảm xúc một cách mạnh mẽ.",
   "nghe-nghiep":
@@ -31,7 +31,7 @@ const so4 = {
   "vai-tro":
     "Họ tập trung vào những trải nghiệm vật chất, thực tế và khả năng tổ chức để phát triển.",
   "bieu-hien":
-    "Thích cách tiếp cận truyền thống, làm việc tay chân, kiếm tiền và kinh doanh, chỉnh chu chi tiết, Ít khi ngồi yên, hay chạy lại hỏi người khác có cần giúp gì không, Thích trải nghiệm về thể chất (ca hát, thể thao).",
+    "Thích cách tiếp cận truyền thống, làm việc tay chân, kiếm tiền và kinh doanh, <strong>chỉnh chu chi tiết, Ít khi ngồi yên, hay chạy lại hỏi người khác có cần giúp gì không, Thích trải nghiệm về thể chất (ca hát, thể thao).</strong>",
   "dac-diem":
     "Cực kỳ thực tế, thích hành động hơn lý thuyết. Rất đáng tin cậy, ngăn nắp kiên nhẫn với thực tế nhưng thiếu kiên nhẫn với các vấn đề tâm linh, làm việc gì cũng giỏi.",
   "thach-thuc":

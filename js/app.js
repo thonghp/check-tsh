@@ -1,6 +1,10 @@
 import * as Calc from "./utils/calculator.js";
 import { drawWaveChart, drawPyramidChart } from "./ui/charts.js";
-import { renderNameAnalysis, renderBirthNumberAnalysis, renderZodiacAnalysis } from "./ui/renderers.js";
+import {
+  renderNameAnalysis,
+  renderBirthNumberAnalysis,
+  renderZodiacAnalysis,
+} from "./ui/renderers.js";
 import { getContentMainNumber } from "./data/contentMainNumber.js";
 import {
   getContentOccurrenceNumber,
@@ -37,17 +41,17 @@ document.getElementById("btn-next").addEventListener("click", function () {
 
   // Đổ dữ liệu chi tiết của số chủ đạo
   const mainNumData = getContentMainNumber(mainNum);
-  document.getElementById("vai-tro").textContent =
+  document.getElementById("vai-tro").innerHTML =
     mainNumData?.["vai-tro"] || "Chưa có dữ liệu";
-  document.getElementById("bieu-hien").textContent =
+  document.getElementById("bieu-hien").innerHTML =
     mainNumData?.["bieu-hien"] || "Chưa có dữ liệu";
-  document.getElementById("dac-diem").textContent =
+  document.getElementById("dac-diem").innerHTML =
     mainNumData?.["dac-diem"] || "Chưa có dữ liệu";
-  document.getElementById("thach-thuc").textContent =
+  document.getElementById("thach-thuc").innerHTML =
     mainNumData?.["thach-thuc"] || "Chưa có dữ liệu";
-  document.getElementById("dinh-huong").textContent =
+  document.getElementById("dinh-huong").innerHTML =
     mainNumData?.["dinh-huong"] || "Chưa có dữ liệu";
-  document.getElementById("nghe-nghiep").textContent =
+  document.getElementById("nghe-nghiep").innerHTML =
     mainNumData?.["nghe-nghiep"] || "Chưa có dữ liệu";
 
   // --- LẤY DỮ LIỆU ĐẾM SỐ ---
@@ -184,22 +188,22 @@ document.getElementById("btn-next").addEventListener("click", function () {
   // Đổ dữ liệu Ý nghĩa các con số
   document.getElementById("occurrence-interpretation").innerHTML =
     createSplitLayout(
-      renderOccurrenceHTML(digitCounts, "Bản Nguyên: Biểu Đồ Ngày Sinh"),
-      renderOccurrenceHTML(combinedCounts, "Dịch Chuyển: Ngày Sinh + Tên Gọi"),
+      renderOccurrenceHTML(digitCounts, "Biểu Đồ Ngày Sinh"),
+      renderOccurrenceHTML(combinedCounts, "Biểu Đồ Ngày Sinh + Tên Gọi"),
     );
 
   // Đổ dữ liệu Mũi tên cá tính
   document.getElementById("arrows-interpretation").innerHTML =
     createSplitLayout(
-      renderArrowsHTML(digitCounts, "Bản Nguyên: Mũi Tên Ngày Sinh"),
-      renderArrowsHTML(combinedCounts, "Dịch Chuyển: Mũi Tên Ngày Sinh + Tên"),
+      renderArrowsHTML(digitCounts, "Mũi Tên Ngày Sinh"),
+      renderArrowsHTML(combinedCounts, "Mũi Tên Ngày Sinh + Tên"),
     );
 
   // Đổ dữ liệu Các số bị cô lập
   document.getElementById("isolated-interpretation").innerHTML =
     createSplitLayout(
-      renderIsolatedHTML(digitCounts, "Bản Nguyên: Ốc Đảo Ngày Sinh"),
-      renderIsolatedHTML(combinedCounts, "Dịch Chuyển: Ốc Đảo Ngày Sinh + Tên"),
+      renderIsolatedHTML(digitCounts, "Ốc Đảo Ngày Sinh"),
+      renderIsolatedHTML(combinedCounts, "Ốc Đảo Ngày Sinh + Tên"),
     );
 
   // --- 4. THUẬT TOÁN TÍNH NĂM THẾ GIỚI & NĂM CÁ NHÂN ---

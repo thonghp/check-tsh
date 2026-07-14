@@ -2,6 +2,7 @@ import { analyzeName, getZodiacSign } from "../utils/calculator.js";
 import { soulContent, expressContent } from "../data/contentName.js";
 import { birthContent } from "../data/contentBirthNumber.js";
 import { axesData, elementsData, zodiacData } from "../data/contentZodiac.js";
+import * as Calc from "../utils/calculator.js";
 
 // Hàm render UI xuất kết quả ra màn hình
 function renderNameAnalysis(fullName) {
@@ -23,7 +24,7 @@ function renderNameAnalysis(fullName) {
         <div style="display: flex; flex-direction: column; gap: 15px;">
           <div style="border-bottom: 1px dashed #bbf7d0; padding-bottom: 10px;">
              <span style="display: inline-block; background: #22c55e; color: #fff; padding: 2px 8px; border-radius: 4px; font-size: 13px; font-weight: bold; margin-bottom: 5px;">CHỈ SỐ TÊN: ${indices.nameNumber}</span>
-             <p style="margin: 5px 0 0 0; font-size: 14px; color: #064e3b; font-style: italic;">(Tổng hòa giữa Tâm hồn [${indices.soulNumber}] và Thể hiện [${indices.expressNumber}])</p>
+             <p style="margin: 5px 0 0 0; font-size: 14px; color: #064e3b; font-style: italic;">(Tổng giữa Tâm hồn [${indices.soulNumber}] và Thể hiện [${indices.expressNumber}])</p>
           </div>
 
           <div style="border-bottom: 1px dashed #bbf7d0; padding-bottom: 10px;">
@@ -43,22 +44,28 @@ function renderNameAnalysis(fullName) {
 
 function renderBirthNumberAnalysis(birthDateStr) {
   // Lấy ra phần 'Ngày' từ chuỗi YYYY-MM-DD
-  const birthDayString = birthDateStr.split("-")[2]; 
-  
+  const birthDayString = birthDateStr.split("-")[2];
+
   // Tính tổng các chữ số của Ngày sinh
-  let birthNumSum = birthDayString.split("").reduce((acc, digit) => acc + parseInt(digit), 0);
-  
+  let birthNumSum = birthDayString
+    .split("")
+    .reduce((acc, digit) => acc + parseInt(digit), 0);
+
   // Rút gọn về dải 1-11 và số đặc biệt 22
   let finalBirthNumber = birthNumSum;
   if (finalBirthNumber !== 11 && finalBirthNumber !== 22) {
     while (finalBirthNumber > 11 && finalBirthNumber !== 22) {
-      finalBirthNumber = finalBirthNumber.toString().split("").reduce((acc, d) => acc + parseInt(d), 0);
+      finalBirthNumber = finalBirthNumber
+        .toString()
+        .split("")
+        .reduce((acc, d) => acc + parseInt(d), 0);
     }
   }
 
   // Nếu kết quả rút gọn ra 10 hoặc 11 thì giữ nguyên, nhưng nếu bạn muốn rút 10 về 1 theo logic Thần số học truyền thống thì có thể tùy chỉnh. Ở đây code bám sát từ điển 1-11 và 22 của bạn.
-  
-  const birthText = birthContent[finalBirthNumber] || "Chưa có dữ liệu giải mã cho con số này.";
+
+  const birthText =
+    birthContent[finalBirthNumber] || "Chưa có dữ liệu giải mã cho con số này.";
   const container = document.getElementById("birth-number-container");
 
   if (!container) return;
