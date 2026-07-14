@@ -1,6 +1,6 @@
 import * as Calc from "./utils/calculator.js";
 import { drawWaveChart, drawPyramidChart } from "./ui/charts.js";
-import { renderNameAnalysis } from "./ui/renderers.js";
+import { renderNameAnalysis, renderBirthNumberAnalysis } from "./ui/renderers.js";
 import { getContentMainNumber } from "./data/contentMainNumber.js";
 import {
   getContentOccurrenceNumber,
@@ -242,6 +242,7 @@ document.getElementById("btn-next").addEventListener("click", function () {
   drawPyramidChart(birthDate, mainNum);
 
   renderNameAnalysis(name);
+  renderBirthNumberAnalysis(birthDate);
 
   // Chuyển màn hình giao diện
   document.getElementById("screen-input").classList.add("hidden");

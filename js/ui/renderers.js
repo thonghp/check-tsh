@@ -1,5 +1,6 @@
 import { analyzeName } from "../utils/calculator.js";
 import { soulContent, expressContent } from "../data/contentName.js";
+import { birthContent } from "../data/contentBirthNumber.js";
 
 // Hàm render UI xuất kết quả ra màn hình
 function renderNameAnalysis(fullName) {
@@ -39,4 +40,40 @@ function renderNameAnalysis(fullName) {
   `;
 }
 
-export { renderNameAnalysis };
+function renderBirthNumberAnalysis(birthDateStr) {
+  // Lấy ra phần 'Ngày' từ chuỗi YYYY-MM-DD
+  const birthDayString = birthDateStr.split("-")[2]; 
+  
+  // Tính tổng các chữ số của Ngày sinh
+  let birthNumSum = birthDayString.split("").reduce((acc, digit) => acc + parseInt(digit), 0);
+  
+  // Rút gọn về dải 1-11 và số đặc biệt 22
+  let finalBirthNumber = birthNumSum;
+  if (finalBirthNumber !== 11 && finalBirthNumber !== 22) {
+    while (finalBirthNumber > 11 && finalBirthNumber !== 22) {
+      finalBirthNumber = finalBirthNumber.toString().split("").reduce((acc, d) => acc + parseInt(d), 0);
+    }
+  }
+
+  // Nếu kết quả rút gọn ra 10 hoặc 11 thì giữ nguyên, nhưng nếu bạn muốn rút 10 về 1 theo logic Thần số học truyền thống thì có thể tùy chỉnh. Ở đây code bám sát từ điển 1-11 và 22 của bạn.
+  
+  const birthText = birthContent[finalBirthNumber] || "Chưa có dữ liệu giải mã cho con số này.";
+  const container = document.getElementById("birth-number-container");
+
+  if (!container) return;
+
+  container.innerHTML = `
+    <div style="margin-top: 25px; width: 100%; text-align: left;">
+      <div style="padding: 20px; background-color: #f8fafc; border-radius: 8px; border-left: 5px solid #0ea5e9; border: 1px solid #e2e8f0;">
+        <h4 style="margin: 0 0 10px 0; color: #0f172a; font-size: 16px; font-weight: 700;">
+          🎂 Đặc điểm Con Số Ngày Sinh: <span style="color: #0ea5e9; font-size: 18px;">${finalBirthNumber}</span> <a target="_blank" href="https://github.com/thonghp/tsh/blob/main/day9.md">Xem thêm</a>
+        </h4>
+        <p style="margin: 0; font-size: 14.5px; color: #475569; line-height: 1.65;">
+          ${birthText}
+        </p>
+      </div>
+    </div>
+  `;
+}
+
+export { renderNameAnalysis, renderBirthNumberAnalysis };
