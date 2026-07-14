@@ -1,6 +1,6 @@
 import * as Calc from "./utils/calculator.js";
 import { drawWaveChart, drawPyramidChart } from "./ui/charts.js";
-import { renderNameAnalysis, renderBirthNumberAnalysis } from "./ui/renderers.js";
+import { renderNameAnalysis, renderBirthNumberAnalysis, renderZodiacAnalysis } from "./ui/renderers.js";
 import { getContentMainNumber } from "./data/contentMainNumber.js";
 import {
   getContentOccurrenceNumber,
@@ -242,7 +242,10 @@ document.getElementById("btn-next").addEventListener("click", function () {
   drawPyramidChart(birthDate, mainNum);
 
   renderNameAnalysis(name);
+  // Con số ngày sinh
   renderBirthNumberAnalysis(birthDate);
+  // Chiêm tinh học cung hoàng đạo
+  renderZodiacAnalysis(birthDate);
 
   // Chuyển màn hình giao diện
   document.getElementById("screen-input").classList.add("hidden");
